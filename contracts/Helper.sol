@@ -36,11 +36,12 @@ contract ShareValueHelper {
 
         if (lockedFundsRatio < 10 ** 18) {
             uint lockedProfit = IVault(vault).lockedProfit();
-            return totalAssets - lockedProfit - (
+            lockedProfit -= (
                 lockedFundsRatio
                 * lockedProfit
                 / 10 ** 18
             );
+            return totalAssets - lockedProfit;
         }
         else {
             return totalAssets;
