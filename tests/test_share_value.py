@@ -34,10 +34,10 @@ def test_helper(helper):
 
     amount = 10_000e6
     tx = vault.deposit(amount)
-    imprecise = amount * 10**decimals / vault.pricePerShare()
+    imprecise = int(amount * 10**decimals / vault.pricePerShare())
     expected = helper.amountToShares(vault, amount) # Must check this after the deposit so that calc is done at same block
     actual = tx.return_value
-    print(f'\nExpected (imprecise): {imprecise}')
+    print(f'\nExpected (via pps): {imprecise}')
     print(f'Expected (precise): {expected}')
     print(f'Actual: {actual}')
     assert expected == actual
@@ -47,9 +47,9 @@ def test_helper(helper):
     amount = expected
     tx = vault.withdraw(amount)
     expected = helper.sharesToAmount(vault, amount)
-    imprecise = amount * vault.pricePerShare() / 10**decimals
+    imprecise = int(amount * vault.pricePerShare() / 10**decimals)
     actual = tx.return_value
-    print(f'\nExpected (imprecise): {imprecise}')
+    print(f'\nExpected (via pps): {imprecise}')
     print(f'Expected (precise): {expected}')
     print(f'Actual: {actual}')
     assert expected == actual

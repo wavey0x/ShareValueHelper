@@ -27,7 +27,7 @@ contract ShareValueHelper {
         if (totalSupply > 0) {
             return amount * totalSupply / calculateFreeFunds(vault);
         }
-        return 0;
+        return amount;
     }
     
     function calculateFreeFunds(address vault) public view returns (uint) {
