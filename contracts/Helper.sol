@@ -8,8 +8,12 @@ interface IVault {
     function lockedProfit() external view returns (uint);
 }
 
+/// @title Share Value Helper
+/// @dev This works on all Yearn vaults 0.4.0+
+/// @dev Achieves a higher precision conversion than pricePerShare; particularly for tokens with < 18 decimals.
 contract ShareValueHelper {
 
+    /// @notice Helper function to convert shares to underlying amount with exact precision
     function sharesToAmount(address vault, uint shares) external view returns (uint) {
         uint totalSupply = IVault(vault).totalSupply();
         if (totalSupply == 0) return shares;
@@ -22,6 +26,7 @@ contract ShareValueHelper {
         );
     }
 
+    /// @notice Helper function to convert underlying amount to shares with exact precision
     function amountToShares(address vault, uint amount) external view returns (uint) {
         uint totalSupply = IVault(vault).totalSupply();
         if (totalSupply > 0) {
